@@ -4,8 +4,9 @@ import tellcore.constants as tdconst
 
 urls = (
 '/', 'index',
-'/test/(\d+)', 'test',
-'/telldus/sensor/(\d+)', 'telldusSensor'
+'/test/(on|off)/(\d+)', 'test',
+'/telldus/sensor/(\d+)', 'telldusSensor',
+'/telldus/switch/(\d+)/(on|off)', 'telldusSwitch'
 )
 
 class index:
@@ -25,10 +26,14 @@ class telldusSensor:
 
 		return str(sensor.temperature().value)
 		
+class telldusSwitch:
+	 def GET(self, id, action):
+                return "Turning "  +  action + "  " +  str(id);
+
 
 class test:
-	def GET(self, id):
-		return id
+	def GET(self, mode,  id):
+		return mode + str(id);
 
 if __name__ == "__main__":
 	app = web.application(urls, globals())
