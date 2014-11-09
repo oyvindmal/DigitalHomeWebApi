@@ -36,18 +36,22 @@ class telldusSwitchOnOff:
 			switch_id = d.id
 			if switch_id == int(id):
 				switch = d
-		last =  switch.last_sent_command(tdconst.TELLSTICK_TURNON | tdconst.TELLSTICK_TURNOFF | tdconst.TELLSTICK_DIM)
-		if last == tdconst.TELLSTICK_TURNON:
-			cmd_str = "ON"
-		elif last  == tdconst.TELLSTICK_TURNOFF:
-			cmd_str = "OFF"
-		elif last == tdconst.TELLSTICK_DIM:
-			cmd_str = "DIMMED:{}".format(switch.last_sent_value())
-		else:
-			cmd_str = "UNKNOWN:{}".format(last)
+		
+		if action == "state":
+			last =  switch.last_sent_command(tdconst.TELLSTICK_TURNON | tdconst.TELLSTICK_TURNOFF | tdconst.TELLSTICK_DIM)
+			if last == tdconst.TELLSTICK_TURNON:
+				cmd_str = "ON"
+			elif last  == tdconst.TELLSTICK_TURNOFF:
+				cmd_str = "OFF"
+			elif last == tdconst.TELLSTICK_DIM:
+				cmd_str = "DIMMED:{}".format(switch.last_sent_value())
+			else:
+				cmd_str = "UNKNOWN:{}".format(last)
+
+			return cmd_str
 
 
-		return cmd_str
+		return "No defined method"
 		
 		
 
