@@ -30,13 +30,16 @@ class telldusSensor:
 class telldusSwitchOnOff:
 	 def GET(self, id, action):
                 core = td.TelldusCore()
-		switch = ""
+		switch = "none"
 		switches = core.devices()
 		for (i, d) in enumerate(switches):
 			switch_id = d.id
 			if switch_id == int(id):
 				switch = d
 		
+		if switch == "none":
+			return "Switch not found"
+
 		if action == "state":
 			last =  switch.last_sent_command(tdconst.TELLSTICK_TURNON | tdconst.TELLSTICK_TURNOFF | tdconst.TELLSTICK_DIM)
 			if last == tdconst.TELLSTICK_TURNON:
