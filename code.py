@@ -50,6 +50,14 @@ class telldusSwitchOnOff:
 
 			return cmd_str
 
+			
+		if action == "on":
+			switch.turn_on()
+			return "Turning on"		
+
+		if action == "off":
+			switch.turn_off()
+			return "Turning off"
 
 		return "No defined method"
 		
