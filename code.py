@@ -1,6 +1,15 @@
 import web
+import json
 import tellcore.telldus as td
 import tellcore.constants as tdconst
+
+class rTelldusSensor:
+	def __init__(self, id, temperature):
+		self.id = id
+		self.temperature = temperature
+
+	def toJSON(self):
+		return dict(id=self.id, temperature=self.temperature)
 
 urls = (
 '/', 'index',
@@ -16,7 +25,9 @@ class index:
 
 class telldusSensor:
 	def GET(self, id):
-		
+		web.header('Content-Type', 'application/json')
+		web.header('Access-Control-Allow-Origin', '*')
+		web.header('Access-Control-Allow-Credentials', 'true')
 		core = td.TelldusCore()
 		sensor = ""
 		sensors = core.sensors()
@@ -25,7 +36,9 @@ class telldusSensor:
 			if sensor_id == int(id):
 				sensor = s
 
-		return str(sensor.temperature().value)
+		so = rTelldusSensor(sensor.id, sensor.temperature().value)
+
+		return json.dumps(so.toJSON())
 		
 class telldusSwitchOnOff:
 	 def GET(self, id, action):
