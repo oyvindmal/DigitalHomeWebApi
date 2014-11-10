@@ -82,12 +82,15 @@ class telldusSwitchOnOff:
 			
 		if action == "on":
 			switch.turn_on()
+			cmd_str = "ON"
 			sobj = rTelldusSwitch(switch.id, switch.name, cmd_str)
 			return json.dumps(sobj.toJSON())
 
 		if action == "off":
 			switch.turn_off()
-			return "Turning off"
+			cmd_str = "OFF"
+			sobj = rTelldusSwitch(switch.id, switch.name, cmd_str)
+			return json.dumps(sobj.toJSON())
 
 		return "No defined method"
 		
