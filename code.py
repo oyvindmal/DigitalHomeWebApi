@@ -33,11 +33,12 @@ class SonosDevice:
 
 urls = (
 '/', 'index',
-'/test/(on|off)/(\d+)', 'test',
+'/test/(\d+\.\d+\.\d+\.\d+)', 'test',
 '/telldus/sensor/(\d+)', 'telldusSensor',
 '/telldus/switch/(\d+)/(on|off|state)', 'telldusSwitchOnOff',
 '/telldus/switches', 'telldusSwitchList',
-'/sonos/players', 'sonosPlayerList'
+'/sonos/players', 'sonosPlayerList',
+'/sonos/(\d+\.\d+\.\d+\.\d+)', 'sonosPlayerInfo'
 )
 
 class index:
@@ -124,9 +125,20 @@ class sonosPlayerList:
 		
 		return json.dumps([item.toJSON() for item in deviceList])
 
+class sonosPlayerInfo:
+	def GET(self, ipadress):
+		web.header('Content-Type', 'application/json')
+		web.header('Access-Control-Allow-Origin', '*')
+		web.header('Access-Control-Allow-Credentials', 'true')
+
+		sonos = SoCo(ipadress)
+		track = sonos.get_current_track_info()
+
+		return json.dumps(track)
+
 class test:
-	def GET(self, mode,  id):
-		return mode + str(id);
+	def GET(self, mode):
+		return mode
 
 if __name__ == "__main__":
 	app = web.application(urls, globals())
