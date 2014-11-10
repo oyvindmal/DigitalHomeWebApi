@@ -11,6 +11,15 @@ class rTelldusSensor:
 	def toJSON(self):
 		return dict(id=self.id, temperature=self.temperature)
 
+class rTelldusSwitch:
+	def __init__(self, id, name, lastsent):
+		self.id = id
+		self.name = name
+		self.lastsent = lastsent
+
+	def toJSON(self):
+		return dict(id = self.id, name = self.name, lastsent = self.lastsent)		
+
 urls = (
 '/', 'index',
 '/test/(on|off)/(\d+)', 'test',
@@ -69,7 +78,8 @@ class telldusSwitchOnOff:
 			
 		if action == "on":
 			switch.turn_on()
-			return "Turning on"		
+			sobj = rTelldusSwitch(switch.id, switch.name, cmd_str)
+			return json.dumps(sobj.toJSON())
 
 		if action == "off":
 			switch.turn_off()
