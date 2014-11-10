@@ -2,6 +2,8 @@ import web
 import json
 import tellcore.telldus as td
 import tellcore.constants as tdconst
+import soco
+from soco import SoCo
 
 class rTelldusSensor:
 	def __init__(self, id, temperature):
@@ -20,12 +22,22 @@ class rTelldusSwitch:
 	def toJSON(self):
 		return dict(id = self.id, name = self.name, lastsent = self.lastsent)		
 
+class SonosDevice:
+	def __init__(self, name, ip):
+		self.name = name
+		self.ip = ip
+
+	def toJSON(self):
+		return dict(name=self.name, ip=self.ip)
+
+
 urls = (
 '/', 'index',
 '/test/(on|off)/(\d+)', 'test',
 '/telldus/sensor/(\d+)', 'telldusSensor',
 '/telldus/switch/(\d+)/(on|off|state)', 'telldusSwitchOnOff',
-'/telldus/switches", ' 'telldusSwitchList'
+'/telldus/switches', 'telldusSwitchList',
+'/sonos/players', 'sonosPlayerList'
 )
 
 class index:
@@ -99,6 +111,10 @@ class telldusSwitchOnOff:
 class telldusSwitchList:
 	def GET(self):
 		return "Not implemented"
+
+class sonosPlayerList:
+	def GET(self):
+		return "Todo"
 
 class test:
 	def GET(self, mode,  id):
