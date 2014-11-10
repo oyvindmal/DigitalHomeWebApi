@@ -114,7 +114,15 @@ class telldusSwitchList:
 
 class sonosPlayerList:
 	def GET(self):
-		return "Todo"
+		web.header('Content-Type', 'application/json')
+		web.header('Access-Control-Allow-Origin', '*')
+		web.header('Access-Control-Allow-Credentials', 'true')
+		deviceList = []
+		for zone in soco.discover():
+			o = SonosDevice(zone.player_name, zone.ip_address)
+			deviceList.append(o)
+		
+		return json.dumps([item.toJSON() for item in deviceList])
 
 class test:
 	def GET(self, mode,  id):
