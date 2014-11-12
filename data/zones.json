@@ -1,0 +1,50 @@
+[
+    {
+        "ZoneName": "Stua",
+        "Devices": [
+            {
+                "type": "TelldusOnOff",
+                "swid": "4"
+            },
+            {
+                "type": "SonosStatus",
+                "ip": "192.168.1.101"
+            },
+            {
+                "type": "TelldusTemperature",
+                "tempid": "12"
+            }
+        ]
+    },
+    {
+        "ZoneName": "Ute",
+        "Devices": [
+            {
+                "type": "TelldusTemperature",
+                "tempid": "11"
+            }
+        ]
+    },
+    {
+        "ZoneName": "Kjøkken",
+        "Devices": [
+            {
+                "type": "SonosStatus",
+                "ip": "192.168.1.105"
+            },
+            {
+                "type": "TelldusTemperature",
+                "tempid": "181"
+            }
+        ]
+    },
+    {
+        "ZoneName": "Bad",
+        "Devices": [
+            {
+                "type": "SonosStatus",
+                "ip": "192.168.1.243"
+            }
+        ]
+    }
+]
