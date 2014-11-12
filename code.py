@@ -3,6 +3,7 @@ import json
 import tellcore.telldus as td
 import tellcore.constants as tdconst
 import soco
+import os
 from soco import SoCo
 
 class rTelldusSensor:
@@ -38,7 +39,8 @@ urls = (
 '/telldus/switch/(\d+)/(on|off|state)', 'telldusSwitchOnOff',
 '/telldus/switches', 'telldusSwitchList',
 '/sonos/players', 'sonosPlayerList',
-'/sonos/(\d+\.\d+\.\d+\.\d+)', 'sonosPlayerInfo'
+'/sonos/(\d+\.\d+\.\d+\.\d+)', 'sonosPlayerInfo',
+'/zones', 'listZones'
 )
 
 class index:
@@ -135,6 +137,19 @@ class sonosPlayerInfo:
 		track = sonos.get_current_track_info()
 
 		return json.dumps(track)
+
+class listZones:
+	def GET(self):
+		
+		pwd = os.getcwd() + "/data/zones.json"
+
+		web.header('Content-Type', 'application/json')
+		web.header('Access-Control-Allow-Origin', '*')
+		web.header('Access-Control-Allow-Credentials', 'true')
+
+		f = open(pwd, 'r')
+		return str(f.read())
+		
 
 class test:
 	def GET(self, mode):
